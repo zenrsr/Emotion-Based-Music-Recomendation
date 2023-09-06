@@ -9,12 +9,12 @@ if ($conn) {
 }
 $query = "INSERT INTO login(email, password) VALUES ('$email','$password')";
 $sql = mysqli_query($conn,$query);
-if(mysqli_num_rows($sql)==0){
-    echo "<script>alert("Data is successfully entered into the user database")</script>";
-    echo "<script>window.open('signin.html','_self')</script>";
+if(mysqli_num_rows($sql)==1){
+    echo "<script>alert("Login Successful!")</script>";
+    echo "<script>window.open('database.html','_self')</script>";
 }
 else{
-    echo "<script>alert('email already in use, please enter another email to proceed')</script>";
+    echo "<script>alert('Invalid Email, please signup before you proceed')</script>";
     echo "<script>window.open('signup.html','_self')</script>"
 }
 ?>
