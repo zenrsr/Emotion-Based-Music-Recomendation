@@ -1,37 +1,20 @@
-
-
-
-
 <?php
-$host = "localhost";
-$username = "postgres";
-$password = "8790659884";
-$database = "pgdemo";
+$email = $_POST['email'];
+$password = $_POST['password'];
 
-$connection = pg_connect("host=$host dbname=$database user=$username password=$password");
+$conn = mysqli_connect('localhost','root','','user');
 
-if (!$connection) {
-    die("Connection failed: " . pg_last_error());
+if ($conn) {
+    echo "Connected to database Successfully!";
+}
+$query = "INSERT INTO login(email, password) VALUES ('$email','$password')";
+$sql = mysqli_query($conn,$query);
+if(mysqli_num_rows($sql)==0){
+    echo "<script>alert("Data is successfully entered into the user database")</script>";
+    echo "<script>window.open('signin.html','_self')</script>";
 }
 else{
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-    
-        // Perform input validation and sanitization here if needed
-    
-        $sql = "INSERT INTO users (email, password) VALUES ('$email', '$password')";
-    
-        $result = pg_query($connection, $sql);
-    
-        if (!$result) {
-            die("Error: " . pg_last_error());
-        } else {
-            echo "Signed Up successfully!";
-        }
-    }
-    
-    // Close the database connection when done
-    pg_close($connection);
+    echo "<script>alert('email already in use, please enter another email to proceed')</script>";
+    echo "<script>window.open('signup.html','_self')</script>"
 }
 ?>
